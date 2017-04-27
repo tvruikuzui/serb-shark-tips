@@ -24,7 +24,7 @@ public class UsersDao {
 
     static {
         users = new HashMap<>();
-        users.put(34123,new User("ahron","luzon",934582,"jasd@sad.com","pass","israel","+972","heb","starter",false));
+        users.put(34123,new User("kjhf@gmail.com",054262354,"ahron","luzon","pass","israel","+972","heb","starter","some token"));
         testENUM = new ArrayList<>();
         testENUM.add(new TestENUM(TestENUM.admins.SUPER_ADMIN, TestENUM.admins.USER, TestENUM.admins.ADMIN));
     }
@@ -115,4 +115,31 @@ public class UsersDao {
         return testENUM;
     }
 
+    public Boolean deleteUserByMail(String mail, String pass, String userm) {
+        if (doYouAdmin(mail,pass) == User.Admin.SUPER_ADMIN){
+            usersRepo.delete(getUserByMail(mail).getId());
+            return true;
+        }
+        return false;
+    }
+
+    public void updateUserByMail(String mail, String pass, User user) {
+        if (doYouAdmin(mail,pass) == User.Admin.SUPER_ADMIN){
+            User t = getUserByMail(mail);
+            t.setCountry(user.getCountry());
+            t.setCountryCode(user.getCountryCode());
+            t.setName(user.getName());
+            t.setLangSpeak(user.getLangSpeak());
+            t.setLastName(user.getLastName());
+            t.setTradeLvl(user.getTradeLvl());
+            t.setPaid(user.isPaid());
+            t.setPassword(user.getPassword());
+            t.setPhoneNumber(user.getPhoneNumber());
+            usersRepo.save(t);
+        }
+    }
+    boolean validFild(String s) {
+
+        return !s.isEmpty();
+    }
 }

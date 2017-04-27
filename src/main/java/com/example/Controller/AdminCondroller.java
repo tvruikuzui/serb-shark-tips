@@ -31,7 +31,7 @@ public class AdminCondroller {
     }
 
     //working
-    @RequestMapping(method = RequestMethod.GET,value = "{user:.+}/{i}")
+    @RequestMapping(method = RequestMethod.PUT,value = "{user:.+}/{i}")
     public String makeAnAdmin(@PathVariable("mail") String mail,@PathVariable("pass") String pass, @PathVariable("user") String user, @PathVariable("i") int witch){
         return userService.makeAnAdmin(mail,pass,user,witch);
     }
@@ -48,8 +48,19 @@ public class AdminCondroller {
         return signalsService.addSignal(mail,pass,signal);
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "performance/{p}")
+    //working
+    @RequestMapping(method = RequestMethod.PUT, value = "performance/{p}")
     public String setPerformance(@PathVariable("mail") String mail,@PathVariable("pass") String pass,@PathVariable("p") int performance){
         return userService.setPerformance(mail,pass,performance);
+    }
+
+    @RequestMapping(method = RequestMethod.DELETE,value = "/{user:.+}")
+    public String deleteUserByMail(@PathVariable("mail") String mail,@PathVariable("pass") String pass,@PathVariable("user") String userm){
+        return userService.deleteUserByMail(mail,pass,userm);
+    }
+
+    @RequestMapping(method = RequestMethod.PUT,consumes = MediaType.APPLICATION_JSON_VALUE,value = "/update_user/")
+    public void updateUserByMail(@PathVariable("mail") String mail,@PathVariable("pass") String pass,@RequestBody User user){
+        userService.updateUserByMail(mail,pass,user);
     }
 }

@@ -85,4 +85,12 @@ public class UserService {
         }
         return "error";
     }
+
+    public String deleteUserByMail(String mail, String pass, String userm) {
+        return usersDao.deleteUserByMail(mail,pass,userm) ? "ok" : "error";
+    }
+
+    public void updateUserByMail(String mail, String pass, User user) {
+        usersDao.updateUserByMail(mail,pass,user);
+    }
 }

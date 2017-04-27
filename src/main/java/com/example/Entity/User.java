@@ -36,20 +36,33 @@ public class User {
 
     public User(){}
 
-    public User(String name, String lastName, long phoneNumber, String email, String password, String country, String countryCode, String langSpeak, String tradeLvl, boolean isPaid) {
+//    public User(String name, String lastName, long phoneNumber, String email, String password, String country, String countryCode, String langSpeak, String tradeLvl, boolean isPaid ) {
+//        this.name = name;
+//        this.lastName = lastName;
+//        this.phoneNumber = phoneNumber;
+//        this.email = email;
+//        this.password = password;
+//        this.country = country;
+//        this.countryCode = countryCode;
+//        this.langSpeak = langSpeak;
+//        this.tradeLvl = tradeLvl;
+//        this.isPaid = isPaid;
+//        //this.token = token;
+//        this.isAdmin = Admin.USER;
+//    }
+
+    public User(String email, long phoneNumber, String name, String lastName, String password, String country, String countryCode, String langSpeak, String tradeLvl, String token) {
+        this.email = email;
+        this.phoneNumber = phoneNumber;
         this.name = name;
         this.lastName = lastName;
-        this.phoneNumber = phoneNumber;
-        this.email = email;
         this.password = password;
         this.country = country;
         this.countryCode = countryCode;
         this.langSpeak = langSpeak;
         this.tradeLvl = tradeLvl;
-        this.isPaid = isPaid;
-        this.isAdmin = Admin.USER;
+        this.token = token;
     }
-
 
     public int getId() {
         return id;
