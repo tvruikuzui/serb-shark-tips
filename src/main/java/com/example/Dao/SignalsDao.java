@@ -30,7 +30,7 @@ public class SignalsDao {
     private UsersDao usersDao;
 
     public boolean addSignal(String mail, String pass, Signal signal) {
-        if (usersDao.doYouAdmin(mail,pass) == User.Admin.SIGNAL_ADMIN || usersDao.doYouAdmin(mail,pass) == User.Admin.SUPER_ADMIN){
+        if (usersDao.doYouAdmin(mail,pass) == User.Admin.SIGNAL_ADMIN || usersDao.doYouAdmin(mail,pass) == User.Admin.SUPER_ADMIN) {
             signalsRepo.save(signal);
             return true;
         }
