@@ -91,7 +91,7 @@ public class UsersDao {
             if (doYouAdmin(mail, pass) == User.Admin.SUPER_ADMIN) {
                 User user1 = getUserByMail(user);
                 switch (toSwitch){
-                    case 0:
+                    case 2:
                         user1.setAdmin(User.Admin.SIGNAL_ADMIN);
                         break;
                     case 1:

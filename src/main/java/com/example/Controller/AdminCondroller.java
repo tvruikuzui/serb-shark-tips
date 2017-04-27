@@ -31,7 +31,7 @@ public class AdminCondroller {
     }
 
     //working
-    @RequestMapping(method = RequestMethod.PUT,value = "{user:.+}/{i}")
+    @RequestMapping(method = RequestMethod.GET,value = "{user:.+}/{i}")
     public String makeAnAdmin(@PathVariable("mail") String mail,@PathVariable("pass") String pass, @PathVariable("user") String user, @PathVariable("i") int witch){
         return userService.makeAnAdmin(mail,pass,user,witch);
     }
@@ -48,7 +48,7 @@ public class AdminCondroller {
         return signalsService.addSignal(mail,pass,signal);
     }
 
-    @RequestMapping(method = RequestMethod.PUT, value = "performance/{p}")
+    @RequestMapping(method = RequestMethod.GET, value = "performance/{p}")
     public String setPerformance(@PathVariable("mail") String mail,@PathVariable("pass") String pass,@PathVariable("p") int performance){
         return userService.setPerformance(mail,pass,performance);
     }
