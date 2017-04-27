@@ -62,8 +62,8 @@ public class UserService {
         return usersDao.getUserByMail(mail,pass,user);
     }
 
-    public String makeAnAdmin(String mail, String pass, String user) {
-        return usersDao.makeAnAdmin(mail,pass,user) ? "ok" : "error";
+    public String makeAnAdmin(String mail, String pass, String user, int wtich) {
+        return usersDao.makeAnAdmin(mail,pass,user,wtich) ? "ok" : "error";
     }
 
     public int getTrailDays(String mail) {
@@ -79,7 +79,7 @@ public class UserService {
     }
 
     public String setPerformance(String mail, String pass,int performance) {
-        if (usersDao.doYouAdmin(mail,pass) && performance > 0 && performance < 100) {
+        if (usersDao.doYouAdmin(mail,pass) == User.Admin.SUPER_ADMIN && performance > 0 && performance < 100) {
             UserService.performance = performance;
             return "ok";
         }

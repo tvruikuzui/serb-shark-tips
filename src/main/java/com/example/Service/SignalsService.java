@@ -19,6 +19,7 @@ public class SignalsService {
 
     public String addSignal(String mail, String pass, Signal signal) {
         return signalsDao.addSignal(mail,pass,signal) ? "ok" : "error";
+        //if the signal added seccusses send FCM
     }
 
 

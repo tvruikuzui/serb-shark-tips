@@ -10,6 +10,9 @@ import java.util.Date;
 @Entity
 public class User {
 
+    public enum Admin{
+        SIGNAL_ADMIN,SUPER_ADMIN,USER;
+    }
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -21,14 +24,19 @@ public class User {
     private long phoneNumber;
 
     private String name,lastName,password,country, countryCode,langSpeak,tradeLvl;
-    private boolean isPaid,isAdmin;
+    private boolean isPaid;
+
+    private Admin isAdmin;
+
+    @Column(nullable = false)
+    private String token;
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date ts = new Date();
 
     public User(){}
 
-    public User(String name, String lastName, long phoneNumber, String email, String password, String country, String countryCode, String langSpeak, String tradeLvl, boolean isPaid, boolean isAdmin) {
+    public User(String name, String lastName, long phoneNumber, String email, String password, String country, String countryCode, String langSpeak, String tradeLvl, boolean isPaid) {
         this.name = name;
         this.lastName = lastName;
         this.phoneNumber = phoneNumber;
@@ -39,7 +47,7 @@ public class User {
         this.langSpeak = langSpeak;
         this.tradeLvl = tradeLvl;
         this.isPaid = isPaid;
-        this.isAdmin = isAdmin;
+        this.isAdmin = Admin.USER;
     }
 
 
@@ -131,11 +139,19 @@ public class User {
         isPaid = paid;
     }
 
-    public boolean isAdmin() {
+    public Admin getAdmin() {
         return isAdmin;
     }
 
-    public void setAdmin(boolean admin) {
+    public void setAdmin(Admin admin) {
         isAdmin = admin;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 }

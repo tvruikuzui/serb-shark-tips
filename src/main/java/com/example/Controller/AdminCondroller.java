@@ -31,9 +31,9 @@ public class AdminCondroller {
     }
 
     //working
-    @RequestMapping(method = RequestMethod.PUT,value = "{user:.+}")
-    public String makeAnAdmin(@PathVariable("mail") String mail,@PathVariable("pass") String pass, @PathVariable("user") String user){
-        return userService.makeAnAdmin(mail,pass,user);
+    @RequestMapping(method = RequestMethod.PUT,value = "{user:.+}/{i}")
+    public String makeAnAdmin(@PathVariable("mail") String mail,@PathVariable("pass") String pass, @PathVariable("user") String user, @PathVariable("i") int witch){
+        return userService.makeAnAdmin(mail,pass,user,witch);
     }
 
     //working

@@ -1,6 +1,7 @@
 package com.example.Dao;
 
 import com.example.Entity.Signal;
+import com.example.Entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -29,7 +30,7 @@ public class SignalsDao {
     private UsersDao usersDao;
 
     public boolean addSignal(String mail, String pass, Signal signal) {
-        if (usersDao.doYouAdmin(mail,pass)){
+        if (usersDao.doYouAdmin(mail,pass) == User.Admin.SIGNAL_ADMIN || usersDao.doYouAdmin(mail,pass) == User.Admin.SUPER_ADMIN){
             signalsRepo.save(signal);
             return true;
         }
