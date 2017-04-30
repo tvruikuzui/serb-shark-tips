@@ -93,4 +93,8 @@ public class UserService {
     public void updateUserByMail(String mail, String pass, User user) {
         usersDao.updateUserByMail(mail,pass,user);
     }
+
+    public String refreshedClientToken(String mail, String token) {
+        return usersDao.refreshedClientToken(mail,token) ? "ok" : "error";
+    }
 }

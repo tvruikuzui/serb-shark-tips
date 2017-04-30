@@ -1,5 +1,7 @@
 package com.example.Entity;
 
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+
 import javax.persistence.*;
 import java.util.Date;
 

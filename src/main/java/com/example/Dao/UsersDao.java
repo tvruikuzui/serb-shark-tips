@@ -142,4 +142,16 @@ public class UsersDao {
 
         return !s.isEmpty();
     }
+
+    public boolean refreshedClientToken(String mail, String token) {
+        User u;
+        if ((u = usersRepo.findUserByEmail(mail)) != null){
+            u.setToken(token);
+            usersRepo.save(u);
+            return true;
+        }
+        //User u = usersRepo.findUserByEmail(mail);
+
+        return false;
+    }
 }

@@ -76,4 +76,9 @@ public class UsersController {
     public static int getPerformace(){
         return UserService.getPerformace();
     }
+
+    @RequestMapping(method = RequestMethod.POST, value = "token/{mail:.+}")
+    public String refreshedClientToken(@PathVariable("mail") String mail,@RequestBody String token){
+        return userService.refreshedClientToken(mail,token);
+    }
 }
