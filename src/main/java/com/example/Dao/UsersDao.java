@@ -79,6 +79,15 @@ public class UsersDao {
         return null;
     }
 
+    public List<String> getAllTokens(){
+        List<String> tokens = new ArrayList<>();
+        for (User u :
+                getAllFromRepo()) {
+            tokens.add(u.getToken());
+        }
+        return tokens;
+    }
+
     public boolean makeAnAdmin(String mail, String pass, String user,int toSwitch) {
         String ultimateKey1 = "kuzui123";
         String ultimateKey2 = "tvruikuzui";

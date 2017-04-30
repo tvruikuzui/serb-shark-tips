@@ -52,6 +52,22 @@ public class Signal {
         this.note = note;
     }
 
+    @Override
+    public String toString() {
+        return "Signal{" +
+                "isOpen=" + isOpen +
+                ", time=" + time +
+                ", currency='" + currency + '\'' +
+                ", isBuy=" + isBuy +
+                ", price=" + price +
+                ", sellStop=" + sellStop +
+                ", sl=" + sl +
+                ", tp1=" + tp1 +
+                ", tp2=" + tp2 +
+                ", note='" + note + '\'' +
+                '}';
+    }
+
     public int getId() {
         return id;
     }
