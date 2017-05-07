@@ -53,8 +53,8 @@ public class UserService {
     }
 
     //regular
-    public User getUserByMail(String mail) {
-        return usersDao.getUserByMail(mail);
+    public User.Admin getAdminByMail(String mail) {
+        return usersDao.getAdminByMail(mail);
     }
 
     //admins
@@ -96,5 +96,9 @@ public class UserService {
 
     public String refreshedClientToken(String mail, String token) {
         return usersDao.refreshedClientToken(mail,token) ? "ok" : "error";
+    }
+
+    public String AddDaysToUser(String mail, String pass, String user, int days,boolean paid) {
+        return usersDao.AddDaysToUser(mail,pass,user,days,paid) ? "added": "error";
     }
 }

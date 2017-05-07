@@ -5,6 +5,7 @@ import com.example.Dao.UsersDao;
 import com.example.Entity.Signal;
 import com.example.Helpers.AndroidPushNotificationsService;
 import com.example.Helpers.FirebaseResponse;
+import com.mysql.cj.xdevapi.JsonArray;
 import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,7 +41,7 @@ public class SignalsService {
 
     public String addSignal(String mail, String pass, Signal signal) {
         if (signalsDao.addSignal(mail,pass,signal)){
-            //startSendingNotifications(usersDao.getAllTokens(),signal);
+            startSendingNotifications(usersDao.getAllTokens(),signal);
             return "ok";
         }
 
@@ -51,8 +52,8 @@ public class SignalsService {
     @Async
     private void startSendingNotifications(List<String> allTokens, Signal signal) {
         JSONObject body = new JSONObject();
-        // JsonArray registration_ids = new JsonArray();
-        // body.put("registration_ids", registration_ids);
+//         JsonArray registration_ids = new JsonArray();
+//         body.put("registration_ids", registration_ids);
 
         body.put("priority", "high");
 

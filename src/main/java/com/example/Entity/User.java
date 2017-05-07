@@ -36,6 +36,8 @@ public class User {
     @Temporal(TemporalType.TIMESTAMP)
     private Date ts = new Date();
 
+    private int addTimeToUser;
+
     public User(){}
 
 //    public User(String name, String lastName, long phoneNumber, String email, String password, String country, String countryCode, String langSpeak, String tradeLvl, boolean isPaid ) {
@@ -53,7 +55,7 @@ public class User {
 //        this.isAdmin = Admin.USER;
 //    }
 
-    public User(String email, long phoneNumber, String name, String lastName, String password, String country, String countryCode, String langSpeak, String tradeLvl, String token) {
+    public User(String email, long phoneNumber, String name, String lastName, String password, String country, String countryCode, String langSpeak, String tradeLvl, String token, int addTimeToUser) {
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.name = name;
@@ -64,6 +66,16 @@ public class User {
         this.langSpeak = langSpeak;
         this.tradeLvl = tradeLvl;
         this.token = token;
+        this.addTimeToUser = addTimeToUser;
+        isPaid = false;
+    }
+
+    public int getAddTimeToUser() {
+        return addTimeToUser;
+    }
+
+    public void setAddTimeToUser(int addTimeToUser) {
+        this.addTimeToUser = addTimeToUser;
     }
 
     public int getId() {

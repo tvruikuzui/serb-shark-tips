@@ -49,10 +49,10 @@ public class UsersController {
         return userService.getAllFromRepo();
     }
 
-    //need to move to admin
+    //this returns witch admin is the user
     @RequestMapping(method = RequestMethod.GET,value = "/{mail:.+}")
-    public User getUserByMail(@PathVariable("mail") String mail){
-        return userService.getUserByMail(mail);
+    public User.Admin getUserByMail(@PathVariable("mail") String mail){
+        return userService.getAdminByMail(mail);
     }
 
     //working

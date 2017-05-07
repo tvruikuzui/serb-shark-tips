@@ -24,7 +24,7 @@ public class UsersDao {
 
     static {
         users = new HashMap<>();
-        users.put(34123,new User("kjhf@gmail.com",054262354,"ahron","luzon","pass","israel","+972","heb","starter","some token"));
+        users.put(34123,new User("kjhf@gmail.com",054262354,"ahron","luzon","pass","israel","+972","heb","starter","some token",0));
         testENUM = new ArrayList<>();
         testENUM.add(new TestENUM(TestENUM.admins.SUPER_ADMIN, TestENUM.admins.USER, TestENUM.admins.ADMIN));
     }
@@ -61,8 +61,12 @@ public class UsersDao {
     }
 
     //no args
-    public User getUserByMail(String mail) {
+    private User getUserByMail(String mail) {
         return usersRepo.findUserByEmail(mail);
+    }
+
+    public User.Admin getAdminByMail(String mail) {
+        return usersRepo.findUserByEmail(mail).getAdmin();
     }
 
     //admin
@@ -161,6 +165,17 @@ public class UsersDao {
         }
         //User u = usersRepo.findUserByEmail(mail);
 
+        return false;
+    }
+
+    public boolean AddDaysToUser(String mail, String pass, String user, int days,boolean paid) {
+        if (doYouAdmin(mail, pass) == User.Admin.SUPER_ADMIN){
+            User u = getUserByMail(user);
+            u.setAddTimeToUser(u.getAddTimeToUser() + days);
+            u.setPaid(paid);
+            usersRepo.save(u);
+            return true;
+        }
         return false;
     }
 }

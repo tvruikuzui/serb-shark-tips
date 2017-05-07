@@ -3,6 +3,7 @@ package com.example.Entity;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 
 import javax.persistence.*;
+import java.util.Date;
 
 /**
  * Created by User on 24/04/2017.
@@ -26,10 +27,13 @@ public class Signal {
     private double tp1;
     private double tp2;
     private String note;
+    private String nameOfSl;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date ts = new Date();
 
     public Signal(){}
 
-    public Signal(boolean isOpen, int time, String currency, boolean isBuy, double price, double sellStop, double sl, double tp1, double tp2, String note) {
+    public Signal(boolean isOpen, int time, String currency, boolean isBuy, double price, double sellStop, double sl, double tp1, double tp2, String note, String nameOfSl) {
         this.isOpen = isOpen;
         this.time = time;
         this.currency = currency;
@@ -40,6 +44,7 @@ public class Signal {
         this.tp1 = tp1;
         this.tp2 = tp2;
         this.note = note;
+        this.nameOfSl = nameOfSl;
     }
 
     public Signal(String currency, double price, double sellStop, double sl, double tp1, double tp2, String note) {
@@ -52,20 +57,16 @@ public class Signal {
         this.note = note;
     }
 
-    @Override
-    public String toString() {
-        return "Signal{" +
-                "isOpen=" + isOpen +
-                ", time=" + time +
-                ", currency='" + currency + '\'' +
-                ", isBuy=" + isBuy +
-                ", price=" + price +
-                ", sellStop=" + sellStop +
-                ", sl=" + sl +
-                ", tp1=" + tp1 +
-                ", tp2=" + tp2 +
-                ", note='" + note + '\'' +
-                '}';
+    public Date getTs() {
+        return ts;
+    }
+
+    public String getNameOfSl() {
+        return nameOfSl;
+    }
+
+    public void setNameOfSl(String nameOfSl) {
+        this.nameOfSl = nameOfSl;
     }
 
     public int getId() {

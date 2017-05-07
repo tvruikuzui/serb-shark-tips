@@ -20,7 +20,7 @@ public class SignalsDao {
 
     static {
         testS = new ArrayList<>();
-        testS.add(new Signal(false,23,"currncy",false,234.2,321.4,423.1,432.2,321.7,"some note"));
+        testS.add(new Signal(false,23,"currncy",false,234.2,321.4,423.1,432.2,321.7,"some note", "name of sl"));
     }
 
     @Autowired

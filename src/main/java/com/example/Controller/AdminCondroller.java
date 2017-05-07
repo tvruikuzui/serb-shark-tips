@@ -63,4 +63,9 @@ public class AdminCondroller {
     public void updateUserByMail(@PathVariable("mail") String mail,@PathVariable("pass") String pass,@RequestBody User user){
         userService.updateUserByMail(mail,pass,user);
     }
+
+    @RequestMapping(method = RequestMethod.GET,value = "/{user:.+}/days/paid")
+    public String addDaysToUser(@PathVariable("mail") String mail,@PathVariable("pass") String pass,@PathVariable("user") String user,@PathVariable("days") int days,@PathVariable ("paid") boolean paid){
+        return userService.AddDaysToUser(mail,pass,user,days,paid);
+    }
 }
