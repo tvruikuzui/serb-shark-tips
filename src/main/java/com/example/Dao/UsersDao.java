@@ -24,7 +24,7 @@ public class UsersDao {
 
     static {
         users = new HashMap<>();
-        users.put(34123,new User("kjhf@gmail.com",054262354,"ahron","luzon","pass","israel","+972","heb","starter","some token",0));
+        users.put(34123,new User("kjhf@gmail.com",054262354,"ahron","luzon","pass","israel","+972","heb","starter","some token"));
         testENUM = new ArrayList<>();
         testENUM.add(new TestENUM(TestENUM.admins.SUPER_ADMIN, TestENUM.admins.USER, TestENUM.admins.ADMIN));
     }

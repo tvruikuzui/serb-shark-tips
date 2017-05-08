@@ -55,7 +55,7 @@ public class User {
 //        this.isAdmin = Admin.USER;
 //    }
 
-    public User(String email, long phoneNumber, String name, String lastName, String password, String country, String countryCode, String langSpeak, String tradeLvl, String token, int addTimeToUser) {
+    public User(String email, long phoneNumber, String name, String lastName, String password, String country, String countryCode, String langSpeak, String tradeLvl, String token) {
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.name = name;
@@ -66,7 +66,7 @@ public class User {
         this.langSpeak = langSpeak;
         this.tradeLvl = tradeLvl;
         this.token = token;
-        this.addTimeToUser = addTimeToUser;
+
         isPaid = false;
     }
 
