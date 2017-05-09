@@ -5,10 +5,21 @@ import com.example.Dao.UsersDao;
 import com.example.Entity.Signal;
 import com.example.Entity.TestENUM;
 import com.example.Entity.User;
+import com.example.Helpers.AndroidPushNotificationsService;
+import com.example.Helpers.FirebaseResponse;
+import org.json.simple.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 
 /**
  * Created by User on 24/04/2017.
@@ -19,8 +30,13 @@ public class UserService {
 
     private static int performance;
 
+    private static final Logger log = LoggerFactory.getLogger(SignalsService.class);
+
     @Autowired
     private UsersDao usersDao;
+
+    @Autowired
+    private AndroidPushNotificationsService androidPushNotificationsService;
 
 //    @Autowired
 //    private SignalsDao signalsDao;
@@ -67,7 +83,7 @@ public class UserService {
     }
 
     public int getTrailDays(String mail) {
-        return usersDao.getTimeStamp(mail) + 14;
+        return usersDao.getTimeStamp(mail);
     }
 
     public Collection<TestENUM> testerEnum(){
@@ -100,5 +116,51 @@ public class UserService {
 
     public String AddDaysToUser(String mail, String pass, String user, int days,boolean paid) {
         return usersDao.AddDaysToUser(mail,pass,user,days,paid) ? "added": "error";
+    }
+
+    public void sendSingleNotificationMessage(String mail, String pass, String message) {
+        if (usersDao.doYouAdmin(mail,pass) == User.Admin.SUPER_ADMIN){
+            sendNotification(message,usersDao.getAllTokens());
+        }
+    }
+
+    private void sendNotification(String message, List<String> allTokens) {
+        JSONObject body = new JSONObject();
+//         JsonArray registration_ids = new JsonArray();
+//         body.put("registration_ids", registration_ids);
+
+        body.put("priority", "high");
+
+        JSONObject notification = new JSONObject();
+        notification.put("body", message);
+        notification.put("title", "Shark Tips");
+
+        body.put("notification", notification);
+
+        for (String t :
+                allTokens) {
+            body.put("to", t);
+
+            HttpEntity<String> request = new HttpEntity<>(body.toString());
+
+            CompletableFuture<FirebaseResponse> pushNotification = androidPushNotificationsService.send(request);
+            CompletableFuture.allOf(pushNotification).join();
+
+            try {
+                FirebaseResponse firebaseResponse = pushNotification.get();
+                if (firebaseResponse.getSuccess() == 1) {
+                    log.info("push notification sent ok!");
+                } else {
+                    log.error("error sending push notifications: " + firebaseResponse.toString());
+                }
+                new ResponseEntity<>(firebaseResponse.toString(), HttpStatus.OK);
+
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            }
+            new ResponseEntity<>("the push notification cannot be send.", HttpStatus.BAD_REQUEST);
+        }
     }
 }

@@ -51,8 +51,15 @@ public class UsersController {
 
     //this returns witch admin is the user
     @RequestMapping(method = RequestMethod.GET,value = "/{mail:.+}")
-    public User.Admin getUserByMail(@PathVariable("mail") String mail){
-        return userService.getAdminByMail(mail);
+    public int getUserByMail(@PathVariable("mail") String mail){
+        switch (userService.getAdminByMail(mail)){
+            case SUPER_ADMIN:
+                return 1;
+            case SIGNAL_ADMIN:
+                return 2;
+            default:
+                return 3;
+        }
     }
 
     //working

@@ -121,7 +121,13 @@ public class UsersDao {
     }
 
     public int getTimeStamp(String mail) {
-        return usersRepo.findUserByEmail(mail).getTs().compareTo(new Date(System.currentTimeMillis()));
+        User u;
+        if (!(u = usersRepo.findUserByEmail(mail)).isPaid()){
+            return u.getTs().compareTo(new Date(System.currentTimeMillis())) + 14;
+        }else{
+            return u.getAddTimeToUser() - (new Date(System.currentTimeMillis()).compareTo(u.getTs()));
+        }
+        //return usersRepo.findUserByEmail(mail).getTs().compareTo(new Date(System.currentTimeMillis()));
     }
 
     public Collection<TestENUM> enumsTest(){

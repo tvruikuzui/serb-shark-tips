@@ -28,7 +28,7 @@ public class User {
     private String name,lastName,password,country, countryCode,langSpeak,tradeLvl;
     private boolean isPaid;
 
-    private Admin isAdmin;
+    private Admin isAdmin = Admin.USER;
 
     @Column(nullable = false)
     private String token;
