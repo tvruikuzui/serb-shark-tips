@@ -84,6 +84,11 @@ public class UsersController {
         return UserService.getPerformace();
     }
 
+    @RequestMapping(method = RequestMethod.GET,value = "ad/")
+    public static String getAd(){
+        return UserService.getAd();
+    }
+
     @RequestMapping(method = RequestMethod.POST, value = "token/{mail:.+}")
     public String refreshedClientToken(@PathVariable("mail") String mail,@RequestBody String token){
         return userService.refreshedClientToken(mail,token);

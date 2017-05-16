@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -39,7 +40,13 @@ public class SignalsDao {
 
     public Collection<Signal> getAllSignals(){
         List<Signal> signals = new ArrayList<>();
-        signalsRepo.findAll().forEach(signals::add);
+        //signalsRepo.findAll().forEach(signals::add);
+        for (Signal s :
+                signalsRepo.findAll()) {
+            if (((new Date().compareTo(s.getTs())) / 84600000) >= 30){
+                signalsRepo.delete(s);
+            }else signals.add(s);
+        }
         return signals;
     }
 }

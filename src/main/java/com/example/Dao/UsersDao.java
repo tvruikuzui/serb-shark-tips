@@ -123,7 +123,7 @@ public class UsersDao {
     public int getTimeStamp(String mail) {
         User u;
         if (!(u = usersRepo.findUserByEmail(mail)).isPaid()){
-            return u.getTs().compareTo(new Date(System.currentTimeMillis())) + 14;
+            return u.getTs().compareTo(new Date(System.currentTimeMillis())) + 14 + u.getAddTimeToUser();
         }else{
             return u.getAddTimeToUser() - (new Date(System.currentTimeMillis()).compareTo(u.getTs()));
         }

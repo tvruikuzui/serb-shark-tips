@@ -30,6 +30,8 @@ public class UserService {
 
     private static int performance;
 
+    private static String ad;
+
     private static final Logger log = LoggerFactory.getLogger(SignalsService.class);
 
     @Autowired
@@ -94,7 +96,11 @@ public class UserService {
         return performance;
     }
 
-    public String setPerformance(String mail, String pass,int performance) {
+    public static String getAd() {
+        return ad;
+    }
+
+    public String setPerformance(String mail, String pass, int performance) {
         if (usersDao.doYouAdmin(mail,pass) == User.Admin.SUPER_ADMIN && performance > 0 && performance < 100) {
             UserService.performance = performance;
             return "ok";
@@ -162,5 +168,13 @@ public class UserService {
             }
             new ResponseEntity<>("the push notification cannot be send.", HttpStatus.BAD_REQUEST);
         }
+    }
+
+    public String setAd(String mail, String pass, String ad) {
+        if (usersDao.doYouAdmin(mail, pass) == User.Admin.SUPER_ADMIN) {
+            UserService.ad = ad;
+            return "ok";
+        }
+        return "error";
     }
 }

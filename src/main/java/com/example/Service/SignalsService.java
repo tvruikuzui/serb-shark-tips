@@ -45,7 +45,7 @@ public class SignalsService {
             return "ok";
         }
 
-        return signalsDao.addSignal(mail,pass,signal) ? "ok" : "error";
+        return "error";
         //if the signal added seccusses send FCM
     }
 

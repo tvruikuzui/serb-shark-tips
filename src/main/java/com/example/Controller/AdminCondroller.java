@@ -54,6 +54,11 @@ public class AdminCondroller {
         return userService.setPerformance(mail,pass,performance);
     }
 
+    @RequestMapping(method = RequestMethod.PUT, value = "ad/",consumes = MediaType.TEXT_PLAIN_VALUE)
+    public String setPerformance(@PathVariable("mail") String mail,@PathVariable("pass") String pass,@RequestBody String ad){
+        return userService.setAd(mail,pass,ad);
+    }
+
     @RequestMapping(method = RequestMethod.DELETE,value = "/{user:.+}")
     public String deleteUserByMail(@PathVariable("mail") String mail,@PathVariable("pass") String pass,@PathVariable("user") String userm){
         return userService.deleteUserByMail(mail,pass,userm);
