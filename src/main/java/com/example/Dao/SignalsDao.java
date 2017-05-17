@@ -2,6 +2,7 @@ package com.example.Dao;
 
 import com.example.Entity.Signal;
 import com.example.Entity.User;
+import com.example.Helpers.CheckEveryDay;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -22,6 +23,7 @@ public class SignalsDao {
     static {
         testS = new ArrayList<>();
         testS.add(new Signal(false,23,"currncy",false,234.2,321.4,423.1,432.2,321.7,"some note","name of sl"));
+        //CheckEveryDay.startTask();
     }
 
     @Autowired
@@ -40,10 +42,10 @@ public class SignalsDao {
 
     public Collection<Signal> getAllSignals(){
         List<Signal> signals = new ArrayList<>();
-        //signalsRepo.findAll().forEach(signals::add);
+        signalsRepo.findAll().forEach(signals::add);
         for (Signal s :
                 signalsRepo.findAll()) {
-            if (((new Date().compareTo(s.getTs())) / 84600000) >= 30){
+            if (s.getTs().after(new Date(s.getTs().getTime() + 2592000000L))){
                 signalsRepo.delete(s);
             }else signals.add(s);
         }
