@@ -1,6 +1,7 @@
 package com.example.Entity;
 
 import netscape.javascript.JSObject;
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 
@@ -73,15 +74,22 @@ public class Signal {
 
     @Override
     public String toString() {
-        return "isOpen=" + isOpen +
-                "&time=" + time +
-                "&currency=" + currency +
-                "&isBuy=" + isBuy +
-                "&price=" + price +
-                "&sellStop=" + sellStop +
-                "&sl=" + sl +
-                "&tp1=" + tp1 +
-                "&tp2=" + tp2;
+        JSONObject object = new JSONObject();
+        try {
+            object.put("isOpen",isOpen);
+            object.put("time",time);
+            object.put("currency",currency);
+            object.put("price",price);
+            object.put("sellStop",sellStop);
+            object.put("tp1",tp1);
+            object.put("sl",sl);
+            object.put("tp2",tp2);
+            object.put("nameOfSl",nameOfSl);
+            object.put("note",note);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return object.toString();
     }
 
     public int getId() {

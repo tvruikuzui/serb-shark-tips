@@ -43,12 +43,6 @@ public class SignalsDao {
     public Collection<Signal> getAllSignals(){
         List<Signal> signals = new ArrayList<>();
         signalsRepo.findAll().forEach(signals::add);
-        for (Signal s :
-                signalsRepo.findAll()) {
-            if (s.getTs().after(new Date(s.getTs().getTime() + 2592000000L))){
-                signalsRepo.delete(s);
-            }else signals.add(s);
-        }
         return signals;
     }
 }
