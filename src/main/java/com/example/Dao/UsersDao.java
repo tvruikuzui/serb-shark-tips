@@ -87,7 +87,8 @@ public class UsersDao {
         List<String> tokens = new ArrayList<>();
         for (User u :
                 getAllFromRepo()) {
-            tokens.add(u.getToken());
+            if (!tokens.contains(u.getToken()))
+                tokens.add(u.getToken());
         }
         return tokens;
     }
