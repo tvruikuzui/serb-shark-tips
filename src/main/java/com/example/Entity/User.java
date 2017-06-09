@@ -36,7 +36,7 @@ public class User {
     @Temporal(TemporalType.TIMESTAMP)
     private Date ts = new Date();
 
-    private int addTimeToUser;
+    private int addTimeToUser = 14;
 
     public User(){}
 

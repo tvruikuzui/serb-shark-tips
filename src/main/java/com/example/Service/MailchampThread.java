@@ -51,7 +51,7 @@ public class MailchampThread extends Thread {
 
         Request request = new Request.Builder()
                 .header("Accept", "application/json")
-                .header("Authorization", Credentials.basic("doesntmatter", "4e384d75f166d65ecb9e266a6b2e1b98-us10"))
+                .header("Authorization", Credentials.basic("doesntmatter", "c61e29e2d6e7df5f7bed0ebbc40fd367-us10"))
                 .url("https://us10.api.mailchimp.com/3.0/lists/5f91e654f5/members")
                 .post(requestBody)
                 .build();

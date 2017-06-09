@@ -2,7 +2,9 @@ package com.example.Helpers;
 
 
 import com.example.Dao.SignalsRepo;
+import com.example.Dao.UsersRepo;
 import com.example.Entity.Signal;
+import com.example.Entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -18,6 +20,9 @@ public class CheckEveryDay {
     @Autowired
     private SignalsRepo signalsRepo;
 
+    @Autowired
+    private UsersRepo usersRepo;
+
     private final static long ONCE_PER_DAY = 1000*60*60*24;
 
     @Scheduled(fixedRate = ONCE_PER_DAY)
@@ -28,6 +33,11 @@ public class CheckEveryDay {
                 signalsRepo.delete(s);
             }
         }
+//        for (User u :
+//                usersRepo.findAll()) {
+//            if (u.getTs())
+//
+//        }
     }
 
 

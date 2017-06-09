@@ -7,6 +7,8 @@ import com.example.Helpers.AndroidPushNotificationsService;
 import com.example.Helpers.FirebaseResponse;
 import com.mysql.cj.xdevapi.JsonArray;
 import org.json.simple.JSONObject;
+import org.json.JSONException;
+//import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +18,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -36,12 +39,21 @@ public class SignalsService {
     @Autowired
     private UsersDao usersDao;
 
+    private MailService mailService;
+
+    @Autowired
+    public SignalsService(MailService mailService) {
+        this.mailService = mailService;
+    }
+
     @Autowired
     private AndroidPushNotificationsService androidPushNotificationsService;
 
     public String addSignal(String mail, String pass, Signal signal) {
-        if (signalsDao.addSignal(mail,pass,signal)){
-            startSendingNotifications(usersDao.getAllTokens(),signal);
+        boolean[] res = signalsDao.addSignal(mail,pass,signal);
+        if (res[1]){
+            startSendMails(usersDao.getEmails(),signal.toString(),res[0]);
+            startSendingNotifications(usersDao.getAllTokens(),signal,res[0]);
             return "ok";
         }
 
@@ -49,17 +61,39 @@ public class SignalsService {
         //if the signal added seccusses send FCM
     }
 
+    private void startSendMails(ArrayList<String> emails, String s, boolean re) {
+        String update = re ? "Update Signal" : "New Signal";
+        String body = "";
+        try {
+            org.json.JSONObject jsonObject = new org.json.JSONObject(s);
+            body += "currency - " + jsonObject.getString("currency")+"\n";
+            body += "buy stop - " + jsonObject.getString("sellStop")+"\n";
+            body += "SL - " + jsonObject.getString("sl")+"\n";
+            body += "TP1 - " + jsonObject.getString("tp1")+"\n";
+            body += "TP2 - " + jsonObject.getString("tp2");
+
+            mailService.sendMail(emails,body,update);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
     @Async
-    private void startSendingNotifications(List<String> allTokens, Signal signal) {
+    private void startSendingNotifications(List<String> allTokens, Signal signal, boolean update) {
         JSONObject body = new JSONObject();
 //         JsonArray registration_ids = new JsonArray();
 //         body.put("registration_ids", registration_ids);
 
         body.put("priority", "high");
 
+        String title = "New Signal";
+        if (update){
+            title = "Update Signal";
+        }
+
         JSONObject notification = new JSONObject();
         notification.put("body", signal.toString());
-        notification.put("title", "New Signal");
+        notification.put("title", title);
 
         body.put("notification", notification);
 

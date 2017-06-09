@@ -1,9 +1,7 @@
 package com.example.Entity;
 
-import netscape.javascript.JSObject;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 
 import javax.persistence.*;
 import java.util.Date;

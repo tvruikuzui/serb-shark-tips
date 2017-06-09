@@ -87,7 +87,7 @@ public class UsersDao {
         List<String> tokens = new ArrayList<>();
         for (User u :
                 getAllFromRepo()) {
-            if (!tokens.contains(u.getToken()))
+            if (!tokens.contains(u.getToken()) && !u.getToken().equals("0"))
                 tokens.add(u.getToken());
         }
         return tokens;
@@ -124,9 +124,10 @@ public class UsersDao {
     public int getTimeStamp(String mail) {
         User u;
         if (!(u = usersRepo.findUserByEmail(mail)).isPaid()){
-            return u.getTs().compareTo(new Date(System.currentTimeMillis())) + 14 + u.getAddTimeToUser();
+            //return u.getTs().compareTo(new Date(System.currentTimeMillis() - (86400000 * u.getAddTimeToUser())));
+            return (int) ((u.getTs().getTime() - new Date().getTime()) / 86400000L ) + u.getAddTimeToUser();
         }else{
-            return u.getAddTimeToUser() - (new Date(System.currentTimeMillis()).compareTo(u.getTs()));
+            return -404;
         }
         //return usersRepo.findUserByEmail(mail).getTs().compareTo(new Date(System.currentTimeMillis()));
     }
@@ -184,5 +185,20 @@ public class UsersDao {
             return true;
         }
         return false;
+    }
+    
+    public ArrayList<String> getEmails (){
+        ArrayList<String> send = new ArrayList<>();
+        for (User u :
+                usersRepo.findAll()) {
+            //todo:fix here
+            if (((u.getTs().getTime() - new Date().getTime()) / 86400000L ) + u.getAddTimeToUser() > 0){
+                send.add(u.getEmail());
+            }else {
+                u.setToken("0");
+                usersRepo.save(u);
+            }
+        }
+        return send;
     }
 }

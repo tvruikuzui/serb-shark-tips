@@ -32,12 +32,16 @@ public class SignalsDao {
     @Autowired
     private UsersDao usersDao;
 
-    public boolean addSignal(String mail, String pass, Signal signal) {
+    public boolean[] addSignal(String mail, String pass, Signal signal) {
+        boolean[] res = new boolean[2];
         if (usersDao.doYouAdmin(mail,pass) == User.Admin.SIGNAL_ADMIN || usersDao.doYouAdmin(mail,pass) == User.Admin.SUPER_ADMIN) {
+            if (signalsRepo.exists(signal.getId()))
+                res[0] = true;
             signalsRepo.save(signal);
-            return true;
+            res[1] = true;
+            return res;
         }
-        return false;
+        return null;
     }
 
     public Collection<Signal> getAllSignals(){
