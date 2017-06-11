@@ -61,6 +61,7 @@ public class SignalsService {
         //if the signal added seccusses send FCM
     }
 
+    @Async
     private void startSendMails(ArrayList<String> emails, String s, boolean re) {
         String update = re ? "Update Signal" : "New Signal";
         String body = "";

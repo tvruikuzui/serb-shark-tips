@@ -125,7 +125,12 @@ public class UsersDao {
         User u;
         if (!(u = usersRepo.findUserByEmail(mail)).isPaid()){
             //return u.getTs().compareTo(new Date(System.currentTimeMillis() - (86400000 * u.getAddTimeToUser())));
-            return (int) ((u.getTs().getTime() - new Date().getTime()) / 86400000L ) + u.getAddTimeToUser();
+            int daysSinceRegister = (int) ((u.getTs().getTime() - new Date().getTime()) / 86400000L ) + u.getAddTimeToUser();
+            if (daysSinceRegister < 0){
+                u.setToken("0");
+                daysSinceRegister = -1;
+            }
+            return daysSinceRegister;
         }else{
             return -404;
         }
