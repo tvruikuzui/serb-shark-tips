@@ -37,12 +37,12 @@ public class UsersController {
         return userService.newUser(user);
     }
 
-    //static for testing
-    @RequestMapping(method = RequestMethod.GET,value = "static/")
-    public Collection<User> getAllUsers (){
-        return userService.getAllUsers();
-    }
-
+//    //static for testing
+//    @RequestMapping(method = RequestMethod.GET,value = "static/")
+//    public Collection<User> getAllUsers (){
+//        return userService.getAllUsers();
+//    }
+//
     //from DB shorten
     @RequestMapping(method = RequestMethod.GET)
     public Collection<User> getAllFromRepo(){

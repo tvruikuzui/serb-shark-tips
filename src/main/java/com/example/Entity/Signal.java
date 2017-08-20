@@ -72,22 +72,33 @@ public class Signal {
 
     @Override
     public String toString() {
-        JSONObject object = new JSONObject();
-        try {
-            object.put("isOpen",isOpen);
-            object.put("time",time);
-            object.put("currency",currency);
-            object.put("price",price);
-            object.put("sellStop",sellStop);
-            object.put("tp1",tp1);
-            object.put("sl",sl);
-            object.put("tp2",tp2);
-            object.put("nameOfSl",nameOfSl);
-            object.put("note",note);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return object.toString();
+
+        String body = "";
+        //org.json.JSONObject jsonObject = new org.json.JSONObject(s);
+        body += "currency - " + currency+"\n";
+        body += nameOfSl + " - " + isNone(price)+"\n";
+        body += "SL - " + isNone(sellStop)+"\n";
+        body += "TP1 - " + isNone(tp1)+"\n";
+        body += "TP2 - " + isNone(tp2);
+        if (!note.isEmpty())
+            body += "\n" + "Note - " + note;
+
+//        JSONObject object = new JSONObject();
+//        try {
+//            object.put("isOpen",isOpen);
+//            object.put("time",time);
+//            object.put("currency",currency);
+//            object.put("price",price);
+//            object.put("sellStop",sellStop);
+//            object.put("tp1",tp1);
+//            object.put("sl",sl);
+//            object.put("tp2",tp2);
+//            object.put("nameOfSl",nameOfSl);
+//            object.put("note",note);
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
+        return body;
     }
 
     public int getId() {
@@ -172,5 +183,11 @@ public class Signal {
 
     public void setNot(String not) {
         this.note = not;
+    }
+
+    private String isNone(double val){
+        if (val == -1)
+            return "None";
+        return String.valueOf(val);
     }
 }

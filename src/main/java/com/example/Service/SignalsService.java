@@ -6,6 +6,7 @@ import com.example.Entity.Signal;
 import com.example.Helpers.AndroidPushNotificationsService;
 import com.example.Helpers.FirebaseResponse;
 import com.mysql.cj.xdevapi.JsonArray;
+import org.json.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.JSONException;
 //import org.json.JSONObject;
@@ -63,27 +64,27 @@ public class SignalsService {
 
     @Async
     private void startSendMails(ArrayList<String> emails, String s, boolean re) {
-        String update = re ? "Update Signal" : "New Signal";
-        String body = "";
-        try {
-            org.json.JSONObject jsonObject = new org.json.JSONObject(s);
-            body += "currency - " + jsonObject.getString("currency")+"\n";
-            body += "buy stop - " + jsonObject.getString("sellStop")+"\n";
-            body += "SL - " + jsonObject.getString("sl")+"\n";
-            body += "TP1 - " + jsonObject.getString("tp1")+"\n";
-            body += "TP2 - " + jsonObject.getString("tp2");
-
-            mailService.sendMail(emails,body,update);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+//        String update = re ? "Update Signal" : "New Signal";
+//        String body = "";
+//        try {
+//            org.json.JSONObject jsonObject = new org.json.JSONObject(s);
+//            body += "currency - " + jsonObject.getString("currency")+"\n";
+//            body += "buy stop - " + jsonObject.getString("sellStop")+"\n";
+//            body += "SL - " + jsonObject.getString("sl")+"\n";
+//            body += "TP1 - " + jsonObject.getString("tp1")+"\n";
+//            body += "TP2 - " + jsonObject.getString("tp2");
+//
+//            mailService.sendMail(emails,body,update);
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
     }
 
     @Async
     private void startSendingNotifications(List<String> allTokens, Signal signal, boolean update) {
         JSONObject body = new JSONObject();
-//         JsonArray registration_ids = new JsonArray();
-//         body.put("registration_ids", registration_ids);
+         JSONArray registration_ids = new JSONArray(allTokens);
+         body.put("registration_ids", registration_ids);
 
         body.put("priority", "high");
 
@@ -95,12 +96,15 @@ public class SignalsService {
         JSONObject notification = new JSONObject();
         notification.put("body", signal.toString());
         notification.put("title", title);
+        notification.put("sound", "default");
+
+        JSONObject data = new JSONObject();
+        data.put("click_action","goto");
 
         body.put("notification", notification);
+        body.put("data",data);
 
-        for (String t :
-                allTokens) {
-            body.put("to", t);
+
 
             HttpEntity<String> request = new HttpEntity<>(body.toString());
 
@@ -123,7 +127,7 @@ public class SignalsService {
             }
             new ResponseEntity<>("the push notification cannot be send.", HttpStatus.BAD_REQUEST);
         }
-    }
+
 
 
     public Collection<Signal> getAllSignals() {

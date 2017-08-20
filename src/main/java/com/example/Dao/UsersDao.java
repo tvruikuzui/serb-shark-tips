@@ -87,7 +87,7 @@ public class UsersDao {
         List<String> tokens = new ArrayList<>();
         for (User u :
                 getAllFromRepo()) {
-            if (!tokens.contains(u.getToken()) && !u.getToken().equals("0"))
+            if (!u.getToken().equals("0"))
                 tokens.add(u.getToken());
         }
         return tokens;
@@ -164,10 +164,7 @@ public class UsersDao {
             usersRepo.save(t);
         }
     }
-    boolean validFild(String s) {
 
-        return !s.isEmpty();
-    }
 
     public boolean refreshedClientToken(String mail, String token) {
         User u;
@@ -181,10 +178,14 @@ public class UsersDao {
         return false;
     }
 
-    public boolean AddDaysToUser(String mail, String pass, String user, int days,boolean paid) {
+    public boolean AddDaysToUser(String mail, String pass, String user, int days,boolean paid, boolean add) {
         if (doYouAdmin(mail, pass) == User.Admin.SUPER_ADMIN){
             User u = getUserByMail(user);
-            u.setAddTimeToUser(u.getAddTimeToUser() + days);
+            if (add) {
+                u.setAddTimeToUser(u.getAddTimeToUser() + days);
+            }else {
+                u.setAddTimeToUser(u.getAddTimeToUser() - days);
+            }
             u.setPaid(paid);
             usersRepo.save(u);
             return true;

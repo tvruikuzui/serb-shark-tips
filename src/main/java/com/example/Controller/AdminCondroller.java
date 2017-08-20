@@ -15,7 +15,7 @@ import java.util.Collection;
  */
 
 @RestController
-@RequestMapping(value = "admin/{mail:.+}/{pass}")
+@RequestMapping(value = "admin/{mail:.+}/{pass:.+}")
 public class AdminCondroller {
 
     @Autowired
@@ -69,9 +69,9 @@ public class AdminCondroller {
         userService.updateUserByMail(mail,pass,user);
     }
 
-    @RequestMapping(method = RequestMethod.GET,value = "/{user:.+}/{days}/{paid}")
-    public String addDaysToUser(@PathVariable("mail") String mail,@PathVariable("pass") String pass,@PathVariable("user") String user,@PathVariable("days") int days,@PathVariable ("paid") boolean paid){
-        return userService.AddDaysToUser(mail,pass,user,days,paid);
+    @RequestMapping(method = RequestMethod.GET,value = "/{user:.+}/{days}/{paid}/{add}")
+    public String addDaysToUser(@PathVariable("mail") String mail,@PathVariable("pass") String pass,@PathVariable("user") String user,@PathVariable("days") int days,@PathVariable ("paid") boolean paid,@PathVariable("add") boolean add){
+        return userService.AddDaysToUser(mail,pass,user,days,paid,add);
     }
 
     @RequestMapping(method = RequestMethod.POST,value = "/message/")
